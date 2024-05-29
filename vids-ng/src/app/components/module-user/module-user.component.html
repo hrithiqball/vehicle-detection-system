@@ -1,0 +1,71 @@
+<div class="app-module-user">
+  <div class="module-header d-flex align-items-center justify-content-between px-1">
+    <div class="d-flex align-items-center">
+      <mat-icon class="material-icons-outlined pr-1">manage_accounts</mat-icon>
+      <span class="mat-subheading-1 mb-0 font-weight-bold">{{'SIDEBAR.USER' | translate}}</span>
+    </div>
+    <div class="d-flex align-items-center">
+      <div class="mr-3"><span *ngIf="selectedUser.length>1">{{selectedUser.length}} users selected</span><span *ngIf="selectedUser.length==1">{{selectedUser.length}} user selected</span></div>
+      <button mat-icon-button *ngIf="selectedUser.length>0">
+        <mat-icon class="material-icons-outlined" (click)="openBulkDeleteUserDialog()">delete</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon class="material-icons-outlined" (click)="openCreateUserDialog()">add</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="module-body">
+    <div class="d-flex align-items-center justify-content-between p-1">
+      <div class="d-flex">
+        <div class="d-flex align-items-center">
+          <mat-label class="mr-1">{{'MODULE_USER.STATUS' | translate}}</mat-label>
+          <mat-form-field appearance="outline" floatLabel="never" class="status" style="width:120px">
+            <mat-select [(ngModel)]="status" (ngModelChange)="onStatusChanged($event)">
+              <mat-option value="all">{{'MODULE_USER.ALL' | translate}}</mat-option>
+              <mat-option value="active">{{'MODULE_USER.ACTIVE' | translate}}</mat-option>
+              <mat-option value="blocked">{{'MODULE_USER.BLOCKED' | translate}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="outline" class="keyword-field pl-1">
+            <mat-icon matPrefix class="material-icons-outlined">search</mat-icon>
+            <input matInput type="text" placeholder="{{'MODULE_USER.SEARCH' | translate}}" [(ngModel)]="keyword" (ngModelChange)="onSearch($event)">
+            <button tabindex="-1" type="button" *ngIf="keyword" matSuffix mat-icon-button (click)="clearKeyword()">
+              <mat-icon class="material-icons-outlined">close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="d-flex align-items-center">
+        <button mat-button class="sort-by" [matMenuTriggerFor]="menuSortBy">{{sortByDisplayName}}</button>
+        <button mat-icon-button *ngIf="!ascSort" (click)="onSortOrderChanged()"><mat-icon class="material-icons-outlined">arrow_downward</mat-icon></button>
+        <button mat-icon-button *ngIf="ascSort" (click)="onSortOrderChanged()"><mat-icon class="material-icons-outlined">arrow_upward</mat-icon></button>
+      </div>
+    </div>
+    <div class="data-container">
+      <div class="d-flex flex-wrap justify-content-center overflow-auto card-container" *ngIf="!isLoading || (isLoading && users.length>0)">
+        <app-user-card class="p-1" *ngFor="let user of users" [user]="user" (itemDeleted)="onUserDeleted($event)" (itemClicked)="onItemClicked($event)"></app-user-card>
+      </div>
+      <div *ngIf="showLoadMore">
+        <div class="d-flex justify-content-center" #loadMore>
+        </div>
+        <div class="d-flex flex-wrap justify-content-center">
+          <div class="shimmer-card shine m-2" *ngFor="let i of [].constructor(20)"></div>
+        </div>
+      </div>
+      <div class="d-flex flex-column flex-wrap justify-content-center align-items-center" *ngIf="isEmpty && !isLoading" style="height:400px">
+        <img src="../../../assets/img/box.png" width="240" class="mb-1" />
+        <div class="mat-headline">{{'MODULE_USER.NO_ITEMS_FOUND' | translate}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-menu #menuSortBy="matMenu">
+  <button mat-menu-item (click)="onSortByClicked('name')">{{'MODULE_USER.NAME' | translate}}</button>
+  <button mat-menu-item (click)="onSortByClicked('email')">{{'MODULE_USER.EMAIL' | translate}}</button>
+  <button mat-menu-item (click)="onSortByClicked('role')">{{'MODULE_USER.ROLE' | translate}}</button>
+  <button mat-menu-item (click)="onSortByClicked('register_time')">{{'MODULE_USER.REGISTER_TIME' | translate}}</button>
+  <button mat-menu-item (click)="onSortByClicked('last_sign_in')">{{'MODULE_USER.LAST_SIGN_IN' | translate}}</button>
+</mat-menu>

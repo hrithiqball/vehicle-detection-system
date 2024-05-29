@@ -1,0 +1,4 @@
+//overwrite the form field padding
+::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.6em 0px !important;}
+::ng-deep .mat-form-field-flex > .mat-form-field-suffix > button{ width: 2em !important; height: 2em !important}
+::ng-deep .mat-form-field-flex > .mat-form-field-suffix > div > button { width: 2em !important; height: 2em !important}

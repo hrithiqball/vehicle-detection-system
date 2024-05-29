@@ -1,0 +1,41 @@
+<div class="app-update-profile-dialog">
+    <div mat-dialog-title>
+        <div class="d-flex align-items-center">
+            <mat-icon class="material-icons-outlined pr-1">manage_accounts</mat-icon>
+            <span>{{'UPDATE_PROFILE_DIALOG.TITLE' | translate}}</span>
+        </div>
+    </div>
+    <div mat-dialog-content>
+        <form id="my_form" [formGroup]="form" (ngSubmit)="submitForm()" class="d-flex flex-column">
+            <mat-label class="font-weight-bold">{{'UPDATE_PROFILE_DIALOG.NAME' | translate}}</mat-label>
+            <mat-form-field class="w-100" [hideRequiredMarker]="true" [floatLabel]="'never'" appearance="outline">
+                <input type="text" matInput formControlName="name" />
+                <button tabindex="-1" type="button" *ngIf="form.controls['name'].value" matSuffix mat-icon-button
+                    aria-label="Clear" (click)="form.controls['name'].setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="form.controls['name'].errors?.['required']">
+                    {{'UPDATE_PROFILE_DIALOG.REQUIRED_FIELD' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <mat-label class="font-weight-bold">{{'UPDATE_PROFILE_DIALOG.PHONE_NUMBER' | translate}}</mat-label>
+            <mat-form-field class="w-100" [hideRequiredMarker]="true" [floatLabel]="'never'" appearance="outline">
+                <input type="text" matInput formControlName="phoneNumber" />
+                <button tabindex="-1" type="button" *ngIf="form.controls['phoneNumber'].value" matSuffix mat-icon-button
+                    aria-label="Clear" (click)="form.controls['phoneNumber'].setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </form>
+    </div>
+    <div mat-dialog-actions align="end">
+      <button mat-button color="primary" type="submit" form="my_form" [disabled]="(!form.valid || isSaving)">
+        <div class="d-flex align-items-center">
+          <div [class.d-none]="isSaving">{{'UPDATE_PROFILE_DIALOG.SUBMIT' | translate}}</div>
+          <mat-progress-spinner mode="indeterminate" diameter="24" [class.d-none]="!isSaving">
+          </mat-progress-spinner>
+        </div>
+      </button>
+      <button type="button" mat-button mat-dialog-close>{{'UPDATE_PROFILE_DIALOG.CANCEL' | translate}}</button>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="app-bulk-delete-user-dialog">
+  <div mat-dialog-title class="mat-dialog-title">
+    <div class="d-flex align-items-center">
+      <div class="circle">
+        <mat-icon class="material-icons-outlined">error_outline</mat-icon>
+      </div>
+      <span class="title pl-1">{{'BULK_DELETE_USER_DIALOG.TITLE' | translate}}</span>
+    </div>
+  </div>
+  <div mat-dialog-content>
+    <div class="mat-body-1" *ngIf="users.length<=1">{{'BULK_DELETE_USER_DIALOG.DESC1_ONE' | translate}}</div>
+    <div class="mat-body-1" *ngIf="users.length>1">{{'BULK_DELETE_USER_DIALOG.DESC1_MANY' | translate}}</div>
+    <div class="font-weight-bold my-1" *ngFor="let user of users">{{user.email}}</div>
+    <div class="mat-body-1" style="word-wrap:break-word;">{{'BULK_DELETE_USER_DIALOG.DESC2' | translate}}</div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button color="warn" type="submit" [disabled]="isSaving" (click)="confirm()">
+      <div class="d-flex align-items-center">
+        <div [class.d-none]="isSaving">{{'BULK_DELETE_USER_DIALOG.CONFIRM' | translate}}</div>
+        <mat-progress-spinner mode="indeterminate" diameter="24" [class.d-none]="!isSaving">
+        </mat-progress-spinner>
+      </div>
+    </button>
+    <button type="button" mat-button mat-dialog-close>{{'BULK_DELETE_USER_DIALOG.CANCEL' | translate}}</button>
+  </div>
+</div>

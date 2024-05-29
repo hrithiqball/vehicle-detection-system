@@ -1,0 +1,31 @@
+.app-update-user-avatar-dialog {
+ 
+  .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    img {
+      width: inherit;
+      height: fit-content;
+    }
+  }
+
+  .avatar-symbol {
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .file-input {
+    display: none;
+  }
+}

@@ -1,0 +1,97 @@
+
+@use 'sass:map';
+@use '../../../node_modules/@angular/material/' as mat;
+
+/* STEP 1: @USE YOUR COMPONENT MIXIN BELOW */
+@use "../../app/components/login-form/login-form.component.theme.scss" as loginForm;
+@use "../../app/components/forgot-password-form/forgot-password-form.component.theme.scss" as forgotPasswordForm;
+@use "../../app/components/reset-password-requested/reset-password-requested.component.theme.scss" as resetPasswordRequested;
+@use "../../app/components/sign-up-form/sign-up-form.component.theme.scss" as signUpForm;
+@use "../../app/components/sign-up-success/sign-up-success.component.theme.scss" as signUpSuccess;
+@use "../../app/components/layout-main/layout-main.component.theme.scss" as layoutMain;
+@use "../../app/components/update-profile-dialog/update-profile-dialog.component.theme.scss" as updateProfileDialog;
+@use "../../app/components/update-avatar-dialog/update-avatar-dialog.component.theme.scss" as updateAvatarDialog;
+@use "../../app/components/module-user/module-user.component.theme.scss" as moduleUser;
+@use "../../app/components/user-card/user-card.component.theme.scss" as userCard;
+@use "../../app/components/update-user-avatar-dialog/update-user-avatar-dialog.component.theme.scss" as updateUserAvatarDialog;
+@use "../../app/components/delete-user-dialog/delete-user-dialog.component.theme.scss" as deleteUserDialog;
+@use "../../app/components/update-user-password-dialog/update-user-password-dialog.component.theme.scss" as updateUserPasswordDialog;
+@use "../../app/components/update-user-info-dialog/update-user-info-dialog.component.theme.scss" as updateUserInfoDialog;
+@use "../../app/components/user-info-dialog/user-info-dialog.component.theme.scss" as userInfoDialog;
+@use "../../app/components/create-user-dialog/create-user-dialog.component.theme.scss" as createUserDialog;
+@use "../../app/components/bulk-delete-user-dialog/bulk-delete-user-dialog.component.theme.scss" as bulkDeleteUserDialog;
+@use "../../app/components/module-role/module-role.component.theme.scss" as moduleRole;
+@use "../../app/components/role/role.component.theme.scss" as role;
+@use "../../app/components/delete-role-dialog/delete-role-dialog.component.theme.scss" as deleteRoleDialog;
+@use "../../app/components/role-users-dialog/role-users-dialog.component.theme.scss" as roleUsersDialog;
+
+@mixin create-theme($css-class, $theme){
+    $primary: mat.define-palette(map.get($theme, primary-base));
+    $accent: mat.define-palette(map.get($theme, accent-base));
+    
+    .#{$css-class} {
+        $light-theme: mat.define-light-theme((color: (primary: $primary,
+                    accent: $accent )));
+    
+        @include all-components-color($light-theme);
+    }
+    
+    .#{$css-class}.dark-mode {
+        $dark-theme: mat.define-dark-theme((color: (primary: $primary,
+                    accent: $accent )));
+    
+        @include all-components-color($dark-theme);
+    }
+}
+
+@mixin all-components-theme($theme) { //theme include color and typography
+  @include mat.all-component-themes($theme);
+  /* STEP 2: ADD YOUR COMPONENT THEME BELOW */
+  @include loginForm.theme($theme);
+  @include forgotPasswordForm.theme($theme);
+  @include resetPasswordRequested.theme($theme);
+  @include signUpForm.theme($theme);
+  @include signUpSuccess.theme($theme);
+  @include layoutMain.theme($theme);
+  @include updateProfileDialog.theme($theme);
+  @include updateAvatarDialog.theme($theme);
+  @include moduleUser.theme($theme);
+  @include userCard.theme($theme);
+  @include updateUserAvatarDialog.theme($theme);
+  @include deleteUserDialog.theme($theme);
+  @include updateUserPasswordDialog.theme($theme);
+  @include updateUserInfoDialog.theme($theme);
+  @include userInfoDialog.theme($theme);
+  @include createUserDialog.theme($theme);
+  @include bulkDeleteUserDialog.theme($theme);
+  @include moduleRole.theme($theme);
+  @include role.theme($theme);
+  @include deleteRoleDialog.theme($theme);
+  @include roleUsersDialog.theme($theme);
+}
+
+@mixin all-components-color($theme) {
+  @include mat.all-component-colors($theme);
+  /* STEP 3: ADD YOUR COMPONENT COLOR BELOW */
+  @include loginForm.color($theme);
+  @include forgotPasswordForm.color($theme);
+  @include resetPasswordRequested.color($theme);
+  @include signUpForm.color($theme);
+  @include signUpSuccess.color($theme);
+  @include layoutMain.color($theme);
+  @include updateProfileDialog.color($theme);
+  @include updateAvatarDialog.color($theme);
+  @include moduleUser.color($theme);
+  @include userCard.color($theme);
+  @include updateUserAvatarDialog.color($theme);
+  @include deleteUserDialog.color($theme);
+  @include updateUserPasswordDialog.color($theme);
+  @include updateUserInfoDialog.color($theme);
+  @include userInfoDialog.color($theme);
+  @include createUserDialog.color($theme);
+  @include bulkDeleteUserDialog.color($theme);
+  @include moduleRole.color($theme);
+  @include role.color($theme);
+  @include deleteRoleDialog.color($theme);
+  @include roleUsersDialog.color($theme);
+}

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vids-api", "vids-api.csproj", "{92CB468A-A724-4DCD-99FD-16EA592A76FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92CB468A-A724-4DCD-99FD-16EA592A76FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92CB468A-A724-4DCD-99FD-16EA592A76FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92CB468A-A724-4DCD-99FD-16EA592A76FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92CB468A-A724-4DCD-99FD-16EA592A76FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {82FFF8E4-CA86-4004-B431-FCDB07AC1A53}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,44 @@
+.app-user-info-dialog {
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    img {
+      width: inherit;
+      height: fit-content;
+    }
+  }
+
+  .avatar-symbol {
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .field {
+      display:flex;
+      align-items: center;
+
+      .field-title {
+          width:150px;
+      }
+
+      .field-value {
+
+      }
+  }
+
+  .user-status {
+    border-radius: 8px;
+    width:fit-content;
+  }
+}

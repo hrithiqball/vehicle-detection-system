@@ -1,0 +1,38 @@
+<div class="app-update-avatar-dialog">
+    <div mat-dialog-title>
+        <div class="d-flex align-items-center">
+            <mat-icon class="material-icons-outlined pr-1">account_circle</mat-icon>
+            <span>{{'UPDATE_AVATAR_DIALOG.TITLE' | translate}}</span>
+        </div>
+    </div>
+    <div mat-dialog-content>
+        <div class="d-flex">
+            <div class="avatar m-1" *ngIf="appService.avatar!='';else showAvatarSymbol">
+                <img src="{{appService.avatar}}">
+            </div>
+            <ng-template #showAvatarSymbol>
+                <div class="avatar-symbol m-1">
+                    {{tokenService.getName().charAt(0).toUpperCase()}}
+                </div>
+            </ng-template>
+            <div>
+                <div class="mat-caption mb-1">{{'UPDATE_AVATAR_DIALOG.MAX_SIZE' | translate}}</div>
+                <div class="mb-1">
+                    <button class="mr-1" type="button" tabindex="-1" mat-stroked-button
+                        (click)="fileUpload.click()">{{'UPDATE_AVATAR_DIALOG.UPLOAD_NEW_AVATAR' | translate}}</button>
+                    <input type="file" class="file-input" accept="image/png" (change)="onFileSelected($event)" #fileUpload>
+                    <button type="button" tabindex="-1" mat-stroked-button color="warn" (click)="removeAvatar()">{{'UPDATE_AVATAR_DIALOG.REMOVE_AVATAR' | translate}}</button>
+                </div>
+                <div class="d-flex align-items-center" *ngIf="uploadProgress">
+                    <mat-progress-bar class="progress-bar" mode="determinate" [value]="uploadProgress"></mat-progress-bar>
+                    <button mat-icon-button type="button" tabindex="-1">
+                        <mat-icon class="material-icons-outlined" (click)="cancelUpload()">cancel</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button type="button" mat-button mat-dialog-close>{{'UPDATE_AVATAR_DIALOG.CLOSE' | translate}}</button>    
+    </div>
+</div>

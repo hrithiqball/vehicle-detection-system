@@ -1,0 +1,11 @@
+.app-module-role {
+  height: 100%;
+
+  .module-header {
+  }
+
+  .module-body {
+    height: calc(100% - 40px);
+    overflow: auto;
+  }
+}

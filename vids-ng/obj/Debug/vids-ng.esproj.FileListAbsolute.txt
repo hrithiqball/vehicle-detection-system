@@ -1,0 +1,2 @@
+D:\Product\VIDS\vids-ng\obj\Debug\vids-ng.esproj.SuggestedBindingRedirects.cache
+D:\Product\VIDS\vids-ng\obj\Debug\vids-ng.esproj.CoreCompileInputs.cache

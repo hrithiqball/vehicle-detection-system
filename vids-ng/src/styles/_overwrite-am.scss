@@ -1,0 +1,84 @@
+// overwrite the angular material component here. Encapsulate in the respective component class.
+
+
+.app-module-user {
+  .keyword-field {
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.app-module-user {
+  .mat-form-field.status {
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.mat-menu-item {
+    height: 36px !important;
+    line-height: 36px !important;
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+
+  .mat-dialog-title {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .mat-dialog-content {
+    margin: 0 !important;
+  }
+
+  .mat-dialog-actions {
+    margin-bottom: 0;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+//overwrite the form field padding
+.mat-form-field-flex > .mat-form-field-infix {
+  padding: 12px 0 8px 0px !important;
+}
+
+.mat-form-field-flex > .mat-form-field-suffix > button {
+  width: 2em !important;
+  height: 2em !important
+}
+
+.mat-form-field-flex > .mat-form-field-suffix > div > button {
+  width: 2em !important;
+  height: 2em !important
+}
+
+.mat-input-element {
+  padding: 4px 0 4px 0 !important;
+  line-height: 1 !important;
+}
+
+.mat-form-field-infix {
+  border-top: 0 solid transparent !important;
+}
+
+.mat-select {
+  padding: 4px 0 !important;
+}
+
+.mat-card {
+    box-shadow: 0 0 12px 0 rgb(0 0 0 /10%) !important;
+}
+
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+    height: 36px !important;
+}
+
+.mat-tooltip {
+    background: #404040 !important;
+}

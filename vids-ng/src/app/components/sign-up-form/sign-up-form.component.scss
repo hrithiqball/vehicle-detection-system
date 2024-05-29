@@ -1,0 +1,18 @@
+.app-sign-up-form {
+    form {
+        width: 380px;
+        border-radius: 16px;
+
+        mat-label {
+            display: flex;
+            align-items: center;
+           
+            mat-icon {
+                display: flex;
+                align-items: center;
+                font-size: 20px;
+            }
+        }
+    }
+}
+

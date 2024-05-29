@@ -1,0 +1,121 @@
+<div class="app-create-user-dialog">
+  <div mat-dialog-title>
+    <div class="d-flex align-items-center">
+      <div class="circle">
+        <mat-icon class="material-icons-outlined">add</mat-icon>
+      </div>
+      <span class="title pl-1">{{'CREATE_USER_DIALOG.TITLE' | translate}}</span>
+    </div>
+  </div>
+  <div mat-dialog-content>
+    <form id="my_form" [formGroup]="form" (ngSubmit)="submitForm()" class="d-flex flex-column">
+      <mat-label class="font-weight-bold">{{'CREATE_USER_DIALOG.NAME' | translate}}</mat-label>
+      <mat-form-field class="w-100" [hideRequiredMarker]="true" [floatLabel]="'never'" appearance="outline">
+        <input type="text" matInput formControlName="name" />
+        <button tabindex="-1" type="button" *ngIf="form.controls['name'].value" matSuffix mat-icon-button
+                aria-label="Clear" (click)="form.controls['name'].setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="form.controls['name'].errors?.['required']">
+          {{'CREATE_USER_DIALOG.REQUIRED_FIELD' | translate}}
+        </mat-error>
+      </mat-form-field>
+      <mat-label class="font-weight-bold">{{'CREATE_USER_DIALOG.EMAIL' | translate}}</mat-label>
+      <mat-form-field class="w-100" [hideRequiredMarker]="true" appearance="outline">
+        <input type="email" matInput formControlName="email" />
+        <div matSuffix class="d-flex align-items-center mb-1">
+          <mat-progress-spinner mode="indeterminate" diameter="22" [style.visibility]="form.controls['email'].pending?'visible':'hidden'"></mat-progress-spinner>
+          <button tabindex="-1" type="button" *ngIf="form.controls['email'].value" mat-icon-button aria-label="Clear"
+                  (click)="form.controls['email'].setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <mat-error *ngIf="form.controls['email'].errors?.['required']">
+          {{'CREATE_USER_DIALOG.REQUIRED_FIELD' | translate}}
+        </mat-error>
+        <mat-error *ngIf="form.controls['email'].errors?.['email']">
+          {{'CREATE_USER_DIALOG.INVALID_EMAIL' | translate}}
+        </mat-error>
+        <mat-error *ngIf="form.controls['email'].errors?.['emailTaken']">
+          {{'CREATE_USER_DIALOG.EMAIL_EXIST' | translate}}
+        </mat-error>
+      </mat-form-field>
+      <mat-label class="font-weight-bold">{{'CREATE_USER_DIALOG.ROLE' | translate}}</mat-label>
+      <mat-form-field class="w-100" [hideRequiredMarker]="true" [floatLabel]="'never'" appearance="outline">
+        <mat-select formControlName="role" required>
+          <mat-option value="{{role.roleName}}" *ngFor="let role of roleList">{{role.roleName}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.controls['role'].errors?.['required']">
+          {{'CREATE_USER_DIALOG.REQUIRED_FIELD' | translate}}
+        </mat-error>
+      </mat-form-field>
+      <mat-label class="font-weight-bold">{{'CREATE_USER_DIALOG.PHONE_NUMBER' | translate}}</mat-label>
+      <mat-form-field class="w-100" [hideRequiredMarker]="true" [floatLabel]="'never'" appearance="outline">
+        <input type="text" matInput formControlName="phoneNumber" />
+        <button tabindex="-1" type="button" *ngIf="form.controls['phoneNumber'].value" matSuffix mat-icon-button
+                aria-label="Clear" (click)="form.controls['phoneNumber'].setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-label class="font-weight-bold">{{'CREATE_USER_DIALOG.PASSWORD' | translate}}</mat-label>
+      <mat-form-field class="w-100" [hideRequiredMarker]="true" appearance="outline">
+        <input type="password" matInput formControlName="password" />
+        <button tabindex="-1" type="button" *ngIf="form.controls['password'].value" matSuffix mat-icon-button aria-label="Clear"
+                (click)="form.controls['password'].setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="form.controls['password'].errors?.['required']">
+          {{'CREATE_USER_DIALOG.REQUIRED_FIELD' | translate}}
+        </mat-error>
+        <mat-error *ngIf="form.controls['password'].errors?.['passwordStrength'] == 'uppercase_needed'">
+          {{'CREATE_USER_DIALOG.UPPERCASE_NEEDED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="form.controls['password'].errors?.['passwordStrength'] == 'lowercase_needed'">
+          {{'CREATE_USER_DIALOG.LOWERCASE_NEEDED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="form.controls['password'].errors?.['passwordStrength'] == 'number_needed'">
+          {{'CREATE_USER_DIALOG.NUMBER_NEEDED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="form.controls['password'].errors?.['passwordStrength'] == 'special_character_needed'">
+          {{'CREATE_USER_DIALOG.SPECIAL_CHARACTER_NEEDED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="form.controls['password'].errors?.['passwordStrength'] == 'length_needed'">
+          {{'CREATE_USER_DIALOG.LENGTH_NEEDED' | translate}}
+        </mat-error>
+      </mat-form-field>
+      <mat-label class="font-weight-bold">{{'CREATE_USER_DIALOG.CONFIRM_PASSWORD' | translate}}</mat-label>
+      <mat-form-field class="w-100" [hideRequiredMarker]="true" appearance="outline">
+        <input type="password" matInput formControlName="confirmPassword" />
+        <button tabindex="-1" type="button" *ngIf="form.controls['confirmPassword'].value" matSuffix mat-icon-button aria-label="Clear"
+                (click)="form.controls['confirmPassword'].setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="form.controls['confirmPassword'].errors?.['required']">
+          {{'CREATE_USER_DIALOG.REQUIRED_FIELD' | translate}}
+        </mat-error>
+        <mat-error *ngIf="form.controls['confirmPassword'].errors?.['confirmPassword']">
+          {{'CREATE_USER_DIALOG.PASSWORD_NOT_MATCHED' | translate}}
+        </mat-error>
+      </mat-form-field>
+      <div class="my-1 mat-caption">
+        {{'CREATE_USER_DIALOG.PASSWORD_REQUIREMENT' | translate}}<br>
+        {{'CREATE_USER_DIALOG.PR1' | translate}}<br>
+        {{'CREATE_USER_DIALOG.PR2' | translate}}<br>
+        {{'CREATE_USER_DIALOG.PR3' | translate}}<br>
+        {{'CREATE_USER_DIALOG.PR4' | translate}}<br>
+        {{'CREATE_USER_DIALOG.PR5' | translate}}<br>
+      </div>
+    </form>
+  </div>
+  <div mat-dialog-actions align="end">
+
+    <button mat-button color="primary" type="submit" form="my_form" [disabled]="(!form.valid || isSaving)">
+      <div class="d-flex align-items-center">
+        <div [class.d-none]="isSaving">{{'CREATE_USER_DIALOG.SUBMIT' | translate}}</div>
+        <mat-progress-spinner mode="indeterminate" diameter="24" [class.d-none]="!isSaving">
+        </mat-progress-spinner>
+      </div>
+    </button>
+    <button type="button" mat-button mat-dialog-close>{{'CREATE_USER_DIALOG.CANCEL' | translate}}</button>
+  </div>
+</div>

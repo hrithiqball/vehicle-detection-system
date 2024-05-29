@@ -1,0 +1,105 @@
+<div class="app-sign-up-form h-100 d-flex justify-content-center align-items-center">
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
+        <div class="p-4">
+            <div class="d-flex align-items-center justify-content-center mb-2">
+                <img src="assets/img/logo/logo.png" width="48" />
+            </div>
+            <div class="d-flex flex-column align-items-center mb-4">
+                <div class="mat-title mb-1 text-align-center">{{'SIGN_UP_FORM.WELCOME_TEXT' | translate}}</div>
+                <div class="mat-body-1 text-align-center">{{'SIGN_UP_FORM.SIGN_UP_TEXT' | translate}}</div>
+            </div>
+            <mat-label class="font-weight-bold">
+                <mat-icon class="material-icons-outlined pr-1">person</mat-icon>{{'SIGN_UP_FORM.NAME' | translate}}
+            </mat-label>
+            <mat-form-field class="w-100" [hideRequiredMarker]="true" appearance="outline">
+                <input type="text" matInput formControlName="name" />
+                <button tabindex="-1" type="button" *ngIf="form.controls['name'].value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="form.controls['name'].setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="form.controls['name'].errors?.['required']">
+                    {{'SIGN_UP_FORM.REQUIRED_FIELD' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <mat-label class="font-weight-bold">
+                <mat-icon class="material-icons-outlined pr-1">email</mat-icon>{{'SIGN_UP_FORM.EMAIL' | translate}}
+            </mat-label>
+            <mat-form-field class="w-100" [hideRequiredMarker]="true" appearance="outline">
+                <input type="email" matInput formControlName="email" />
+                <div matSuffix class="d-flex align-items-center mb-1">
+                    <mat-progress-spinner mode="indeterminate" diameter="22" [style.visibility]="form.controls['email'].pending?'visible':'hidden'"></mat-progress-spinner>
+                    <button tabindex="-1" type="button" *ngIf="form.controls['email'].value" mat-icon-button aria-label="Clear"
+                        (click)="form.controls['email'].setValue('')">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+                <mat-error *ngIf="form.controls['email'].errors?.['required']">
+                    {{'SIGN_UP_FORM.REQUIRED_FIELD' | translate}}
+                </mat-error>
+                <mat-error *ngIf="form.controls['email'].errors?.['email']">
+                    {{'SIGN_UP_FORM.INVALID_EMAIL' | translate}}
+                </mat-error>
+                <mat-error *ngIf="form.controls['email'].errors?.['emailTaken']">
+                    {{'SIGN_UP_FORM.EMAIL_EXIST' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <mat-label class="font-weight-bold">
+                <mat-icon class="material-icons-outlined pr-1">password</mat-icon>{{'SIGN_UP_FORM.PASSWORD' | translate}}
+            </mat-label>
+            <mat-form-field class="w-100" [hideRequiredMarker]="true" appearance="outline">
+                <input type="password" matInput formControlName="password" />
+                <button tabindex="-1" type="button" *ngIf="form.controls['password'].value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="form.controls['password'].setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="form.controls['password'].errors?.['required']">
+                    {{'SIGN_UP_FORM.REQUIRED_FIELD' | translate}}
+                </mat-error>
+                <mat-error *ngIf="form.controls['password'].errors?.['passwordStrength'] == 'uppercase_needed'">
+                    {{'SIGN_UP_FORM.UPPERCASE_NEEDED' | translate}}
+                </mat-error>
+                <mat-error *ngIf="form.controls['password'].errors?.['passwordStrength'] == 'lowercase_needed'">
+                    {{'SIGN_UP_FORM.LOWERCASE_NEEDED' | translate}}
+                </mat-error>
+                <mat-error *ngIf="form.controls['password'].errors?.['passwordStrength'] == 'number_needed'">
+                    {{'SIGN_UP_FORM.NUMBER_NEEDED' | translate}}
+                </mat-error>
+                <mat-error *ngIf="form.controls['password'].errors?.['passwordStrength'] == 'special_character_needed'">
+                    {{'SIGN_UP_FORM.SPECIAL_CHARACTER_NEEDED' | translate}}
+                </mat-error>
+                <mat-error *ngIf="form.controls['password'].errors?.['passwordStrength'] == 'length_needed'">
+                    {{'SIGN_UP_FORM.LENGTH_NEEDED' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <mat-label class="font-weight-bold">
+                <mat-icon class="material-icons-outlined pr-1">password</mat-icon>{{'SIGN_UP_FORM.CONFIRM_PASSWORD' | translate}}
+            </mat-label>
+            <mat-form-field class="w-100" [hideRequiredMarker]="true" appearance="outline">
+                <input type="password" matInput formControlName="confirmPassword" />
+                <button tabindex="-1" type="button" *ngIf="form.controls['confirmPassword'].value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="form.controls['confirmPassword'].setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="form.controls['confirmPassword'].errors?.['required']">
+                    {{'SIGN_UP_FORM.REQUIRED_FIELD' | translate}}
+                </mat-error>
+                <mat-error *ngIf="form.controls['confirmPassword'].errors?.['confirmPassword']">
+                    {{'SIGN_UP_FORM.PASSWORD_NOT_MATCHED' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <div class="my-1 mat-caption">
+                {{'SIGN_UP_FORM.PASSWORD_REQUIREMENT' | translate}}<br>
+                {{'SIGN_UP_FORM.PR1' | translate}}<br>
+                {{'SIGN_UP_FORM.PR2' | translate}}<br>
+                {{'SIGN_UP_FORM.PR3' | translate}}<br>
+                {{'SIGN_UP_FORM.PR4' | translate}}<br>
+                {{'SIGN_UP_FORM.PR5' | translate}}<br>
+            </div>
+            <div class="d-flex justify-content-center pt-2">
+                <button type="button" mat-stroked-button (click)="cancelForm()">{{'SIGN_UP_FORM.CANCEL' | translate}}</button>
+                <button mat-flat-button color="primary" class="ml-1" type="submit"
+                [disabled]="!form.valid">{{'SIGN_UP_FORM.SIGN_UP' | translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>

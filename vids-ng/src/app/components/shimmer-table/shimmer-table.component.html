@@ -1,0 +1,6 @@
+<div class="app-shimmer-table">
+  <div class="d-flex mb-1" *ngFor="let i of [].constructor(rowCount)">
+    <div class="shine mr-1" [style.width]="columnWidth" [style.height]="columnHeight"  *ngFor="let i of [].constructor(columnCount)"></div>
+    <div [style.height]="columnHeight" class="shine" style="width:100%;"></div>
+  </div>
+</div>

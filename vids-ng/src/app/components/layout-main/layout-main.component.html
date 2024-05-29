@@ -1,0 +1,163 @@
+<div class="app-layout-main home h-100 w-100 d-flex flex-column">
+    <mat-toolbar color="primary" class="d-flex justify-content-between">
+        <div class="d-flex align-items-center">
+            <button mat-icon-button (click)="toggleSidebar()">
+                <mat-icon>menu</mat-icon>
+              </button>
+              <span mat-title>{{appConfig.applicationName}}</span>
+        </div>
+       <div>
+        <div class="d-flex align-items-center">
+            <div class="d-flex px-1">
+                <button mat-icon-button [matMenuTriggerFor]="menuLanguage">
+                    <img src="assets/flag/united-state.png" [class.d-none]="translate.currentLang !='en'" matTooltip="English"/>
+                    <img src="assets/flag/malaysia.png" [class.d-none]="translate.currentLang !='ms'" matTooltip="Bahasa Melayu"/>
+                    <img src="assets/flag/china.png" [class.d-none]="translate.currentLang !='zh'" matTooltip="简体中文"/>
+                </button>
+                <button mat-icon-button [matMenuTriggerFor]="menuTheme">
+                    <mat-icon class="material-icons-outlined" matTooltip="{{'TOOLBAR.THEME' | translate}}">palette</mat-icon>
+                </button>
+                <button mat-icon-button class="dark-mode" [class.d-none]="appService.currentMode!='light-mode'" #tooltip="matTooltip" matTooltip="{{'TOOLBAR.DARK_MODE' | translate}}" (click)="changeMode('dark-mode')">
+                    <mat-icon class="material-icons-outlined">dark_mode</mat-icon>
+                </button>
+                <button mat-icon-button class="light-mode" [class.d-none]="appService.currentMode!='dark-mode'" #tooltip="matTooltip" matTooltip="{{'TOOLBAR.LIGHT_MODE' | translate}}" (click)="changeMode('light-mode')">
+                    <mat-icon class="material-icons-outlined">light_mode</mat-icon>
+                </button>
+            </div>
+            <div>
+                <!-- <button mat-mini-fab *ngIf="appService.avatar!='';else showAvatarSymbol" [matMenuTriggerFor]="menuUser">
+                   
+                    
+                </button> -->
+                <div class="avatar" *ngIf="appService.avatar!='';else showAvatarSymbol" [matMenuTriggerFor]="menuUser">
+                    <img src="{{appService.avatar}}">
+                </div>
+                <ng-template #showAvatarSymbol>
+                    <button mat-mini-fab [matMenuTriggerFor]="menuUser" color="accent">
+                        {{tokenService.getName().charAt(0).toUpperCase()}}
+                    </button>
+                </ng-template>
+            </div>
+        </div>
+       </div>
+    </mat-toolbar>
+    <mat-sidenav-container class="h-100">
+        <mat-sidenav mode="side" opened="{{appService.isSidebarOn}}">
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="sidebar-tree">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                    <div class="mat-tree-node px-1" mat-ripple [routerLink]="node.url">
+                        <mat-icon class="material-icons-outlined menu-icon pr-2" [class.d-none]="node.icon == null">{{node.icon}}</mat-icon>
+                        <div class="w-100">{{node.name}}</div>
+                    </div>
+                </mat-tree-node>
+
+                <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                    <div class="mat-tree-node px-1" matTreeNodeToggle mat-ripple>
+                        <mat-icon class="material-icons-outlined menu-icon pr-2" [class.d-none]="node.icon == null">{{node.icon}}</mat-icon>
+                        <div class="w-100">{{node.name}}</div>
+                        <mat-icon class="mat-icons-outlined px-2">
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                    </div>
+                    <div [class.invisible]="!treeControl.isExpanded(node)" role="group">
+                        <ng-container matTreeNodeOutlet></ng-container>
+                    </div>
+                </mat-nested-tree-node>
+            </mat-tree>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
+
+<mat-menu #menuLanguage="matMenu">
+    <div class="menu-language">
+        <button mat-menu-item (click)="changeLanguage('en')"><img src="assets/flag/united-state.png" class="pr-1"/>English</button>
+        <button mat-menu-item (click)="changeLanguage('ms')"><img src="assets/flag/malaysia.png"  class="pr-1"/>Bahasa Melayu</button>
+        <button mat-menu-item (click)="changeLanguage('zh')"><img src="assets/flag/china.png"  class="pr-1"/>简体中文</button>
+    </div>
+</mat-menu>
+
+<mat-menu #menuTheme="matMenu">
+    <div class="menu-theme">
+        <div class="d-flex align-items-center">
+            <button mat-menu-item (click)="changeTheme('theme-red')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-red'" style="background:#F44336;color:white"><mat-icon class="material-icons-outlined">done</mat-icon></div>     
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-pink')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-pink'" style="background:#E91E63;color:white"><mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-purple')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-purple'" style="background:#9C27B0;color:white"><mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-deep-purple')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-deep-purple'" style="background:#673AB7;color:white"><mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-indigo')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-indigo'" style="background:#3F51B5;color:white"><mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-blue')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-blue'" style="background:#2196F3;color:black"><mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+       </div>
+       <div class="d-flex align-items-center">
+           <button mat-menu-item (click)="changeTheme('theme-light-blue')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-light-blue'" style="background:#03A9F4;color:black"><mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-cyan')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-cyan'" style="background:#00BCD4;color:black"><mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-teal')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-teal'" style="background:#009688;color:white"><mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-green')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-green'" style="background:#4CAF50;color:black"> <mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-light-green')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-light-green'" style="background:#8BC34A;color:black"> <mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-lime')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-lime'" style="background:#CDDC39;color:black"> <mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+       </div>
+       <div class="d-flex align-items-center">
+           <button mat-menu-item (click)="changeTheme('theme-yellow')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-yellow'" style="background:#FFEB3B;color:black"> <mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-orange')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-orange'" style="background:#FF9800;color:black"> <mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-deep-orange')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-deep-orange'" style="background:#FF5722;color:black"> <mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-brown')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-brown'" style="background:#795548;color:white"> <mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-grey')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-grey'" style="background:#9E9E9E;color:white"> <mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+           <button mat-menu-item (click)="changeTheme('theme-blue-grey')">
+               <div class="color" [class.active]="appService.currentTheme=='theme-blue-grey'" style="background:#607D8B;color:white"> <mat-icon class="material-icons-outlined">done</mat-icon></div>
+           </button>
+       </div>
+    </div>
+</mat-menu>
+
+<mat-menu #menuUser="matMenu">
+    <div class="menu-user">
+        <div class="user-profile d-flex flex-column justify-content-center p-2">
+            <div class="mat-subheading-1">{{'TOOLBAR.HELLO' | translate}}, {{tokenService.getName()}}!</div>
+            <div class="d-flex align-items-center">
+                <mat-icon class="material-icons-outlined pr-2">email</mat-icon>
+                <div class="email">{{tokenService.getEmail()}}</div>                
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="openUpdateAvatarDialog()"><mat-icon class="material-icons-outlined">account_circle</mat-icon>{{'TOOLBAR.UPDATE_AVATAR' | translate}}</button>
+        <button mat-menu-item (click)="openUpdateProfileDialog()"><mat-icon class="material-icons-outlined">manage_accounts</mat-icon>{{'TOOLBAR.UPDATE_PROFILE' | translate}}</button>
+        <button mat-menu-item (click)="openUpdatePasswordDialog()"><mat-icon class="material-icons-outlined">password</mat-icon>{{'TOOLBAR.UPDATE_PASSWORD' | translate}}</button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="signOut()"><mat-icon class="material-icons-outlined">logout</mat-icon>{{'TOOLBAR.SIGN_OUT' | translate}}</button>
+    </div>
+</mat-menu>

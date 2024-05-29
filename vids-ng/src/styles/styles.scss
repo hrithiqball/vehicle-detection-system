@@ -1,0 +1,46 @@
+/* You can add global styles to this file, and also import other style files */
+@use 'sass:map';
+@use "../../node_modules/@angular/material/" as mat;
+@use "./themes/theme" as theme;
+@use "./overwrite-am";
+
+//define the custom typography here. make sure you import the font in index.html.
+//inter 300 light, 400 regular, 500 medium, 700 bold
+$custom-typography: mat.define-typography-config( $font-family: 'Inter', $display-4: mat.define-typography-level(112px,136px,400), $display-3: mat.define-typography-level(56px,70px,400), $display-2: mat.define-typography-level(45px,55px,400), $display-1: mat.define-typography-level(34px,42px,400), $headline: mat.define-typography-level(24px,30px,500), $title: mat.define-typography-level(20px,28px,700), $subheading-2: mat.define-typography-level(16px,22px,400), $subheading-1: mat.define-typography-level(15px,22px,400), $body-2: mat.define-typography-level(14px,20px,500), $body-1: mat.define-typography-level(14px,20px,400), $caption: mat.define-typography-level(12px,18px,400), $button: mat.define-typography-level(14px,20px,500), $input: mat.define-typography-level(inherit,1.125,400), );
+
+// this one must be included for custome style if we x include prebuilt style in angular.json.
+@include mat.core($custom-typography);
+
+$green: mat.$green-palette;
+@debug(map.get($green, 100));
+
+//default light mode (blue theme)
+$default-light-theme: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette(mat.$blue-palette),
+    accent: mat.define-palette(mat.$pink-palette),
+  ),
+  typography: $custom-typography //no need to include typography in subsequent theme as same.
+));
+
+@include theme.all-components-theme($default-light-theme);
+
+//default dark mode (blue theme)
+.dark-mode {
+  $default-dark-theme: mat.define-dark-theme((
+        color: (
+          primary: mat.define-palette(mat.$blue-palette),
+          accent: mat.define-palette(mat.$pink-palette),
+        )
+      ));
+
+  @include theme.all-components-color($default-dark-theme);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

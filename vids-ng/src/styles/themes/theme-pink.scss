@@ -1,0 +1,11 @@
+@use './theme' as theme;
+@use '../../../node_modules/@angular/material/' as mat;
+
+$css-class: 'theme-pink';
+
+$theme: (
+    primary-base: mat.$pink-palette,
+    accent-base: mat.$blue-palette
+);
+
+@include theme.create-theme($css-class, $theme);

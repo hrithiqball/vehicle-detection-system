@@ -1,0 +1,86 @@
+@use 'sass:map';
+@use '../../../../node_modules/@angular/material' as mat;
+
+@mixin color($theme) {
+
+    // Get the color config from the theme
+    $color-config: mat.get-color-config($theme);
+    $primary: map.get($color-config, 'primary');
+    $accent: map.get($color-config, 'accent');
+    $warn: map.get($color-config, 'warn');
+    $is-dark: map.get($color-config, 'is-dark');
+    $foreground: map.get($color-config, 'foreground');
+    $background: map.get($color-config, 'background');
+
+
+    @if ($is-dark == true) {
+        .app-layout-main {
+            .sidebar-tree {
+                .menu-icon {
+                    color:  map.get(mat.$grey-palette, 50);
+                }
+            }
+        }
+
+        .mat-drawer, .mat-tree {
+            background-color: map.get(mat.$grey-palette, 800);
+        }
+
+        .menu-user {
+            mat-icon {
+                color: map.get($foreground, 'icon');
+            }
+
+            .user-profile {
+                .mat-subheading-1 {
+                    color: map.get(mat.$grey-palette, 50);
+                }
+
+                .email {
+                    color: map.get(mat.$grey-palette, 50);
+                }
+            }
+        }
+    }@else {
+        .app-layout-main {
+            .sidebar-tree {
+                .menu-icon {
+                    color: map.get($foreground, 'icon');
+                }
+            }
+           
+            .avatar {
+                background-color: map.get($accent, 500);
+            }
+        }
+
+        .menu-user {
+            mat-icon {
+                color: map.get($foreground, 'icon');
+            }
+        }
+    }
+
+
+}
+
+@mixin typography($theme) {
+    $typo-config: mat.get-typography-config($theme);
+    $font-family: mat.font-family($typo-config);
+
+}
+
+@mixin theme($theme) {
+    $color-config: mat.get-color-config($theme);
+
+    @if $color-config  !=null {
+        @include color($theme);
+    }
+
+    //@include typography($theme);
+    $typo-config: mat.get-typography-config($theme);
+
+    @if $typo-config  !=null {
+        @include typography($theme);
+    }
+}

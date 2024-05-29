@@ -1,0 +1,31 @@
+.app-role-users-dialog {
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    img {
+      width: inherit;
+      height: fit-content;
+    }
+  }
+
+  .avatar-symbol {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .user {
+    box-shadow: 0 0 12px 0 rgb(0 0 0 / 10%) !important
+  }
+
+}

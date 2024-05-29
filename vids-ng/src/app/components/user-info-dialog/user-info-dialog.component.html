@@ -1,0 +1,45 @@
+<div class="app-user-info-dialog">
+  <div mat-dialog-title>
+    <div class="d-flex align-items-center">
+      <div>
+        <div class="avatar" *ngIf="user.avatar!='';else showAvatarSymbol">
+          <img src="{{user.avatar}}">
+        </div>
+        <ng-template #showAvatarSymbol>
+          <div class="avatar-symbol">
+            {{user.name[0].toUpperCase()}}
+          </div>
+        </ng-template>
+      </div>
+      <span class="pl-1">{{user.name}}</span>
+    </div>
+  </div>
+  <div mat-dialog-content>
+    <div class="field mb-1">
+      <div class="field-title font-weight-bold">{{'USER_INFO_DIALOG.EMAIL' | translate}}</div>
+      <div class="field-value">{{user.email}}</div>
+    </div>
+    <div class="field mb-1">
+      <div class="field-title font-weight-bold">{{'USER_INFO_DIALOG.ROLE' | translate}}</div>
+      <div class="field-value">{{user.role}}</div>
+    </div>
+    <div class="field mb-1">
+      <div class="field-title font-weight-bold">{{'USER_INFO_DIALOG.STATUS' | translate}}</div>
+      <div class="field-value">
+        <div class="user-status px-1 active mat-caption" *ngIf="!user.isBlocked; else blockUser">{{'USER_INFO_DIALOG.ACTIVE' | translate}}</div>
+        <ng-template #blockUser><div class="user-status px-1 blocked mat-caption">{{'USER_INFO_DIALOG.BLOCKED' | translate}}</div></ng-template>
+      </div>
+    </div>
+    <div class="field mb-1">
+      <div class="field-title font-weight-bold">{{'USER_INFO_DIALOG.REGISTER_TIME' | translate}}</div>
+      <div class="field-value">{{user.registerTime | dateTime}}</div>
+    </div>
+    <div class="field mb-1">
+      <div class="field-title font-weight-bold">{{'USER_INFO_DIALOG.LAST_SIGN_IN' | translate}}</div>
+      <div class="field-value">{{user.lastSignIn | dateTime}}</div>
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-button mat-dialog-close>{{'USER_INFO_DIALOG.CLOSE' | translate}}</button>
+  </div>
+</div>

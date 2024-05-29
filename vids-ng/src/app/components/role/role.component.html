@@ -1,0 +1,199 @@
+<div class="app-role-cc d-flex">
+  <div class="role-list-container px-1">
+    <div *ngIf="isLoadingRoles" class="mt-2">
+      <app-shimmer-list [itemCount]="12"></app-shimmer-list>
+    </div>
+    <mat-selection-list #roles [multiple]="false" *ngIf="!isLoadingRoles">
+      <mat-list-option *ngFor="let role of roleList" [value]="role.roleName" (click)="onRoleClicked(role.roleName)">
+        {{role.roleName}}
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+  <div class="role-container px-2">
+    <mat-card class="my-2">
+      <mat-card-content>
+        <div *ngIf="isLoadingRole">
+          <div class="d-flex justify-content-end my-2">
+            <div class="shine" style="width:40px;height:32px;"></div>
+          </div>
+          <div class="mb-2">
+            <app-shimmer-form [rowCount]="1"></app-shimmer-form>
+          </div>
+          <app-shimmer-table [rowCount]="13" [columnCount]="3" [columnHeight]="'32px'"></app-shimmer-table>
+        </div>
+        <div *ngIf="!isLoadingRole">
+          <div class="d-flex align-items-center justify-content-between mb-2 mr-1">
+            <div class="d-flex align-items-center">
+              <div class="mat-title mb-0 mr-1" *ngIf="!isNewRole">{{role.roleName}}</div>
+              <div class="mat-title mb-0 mr-1" *ngIf="isNewRole">{{'ROLE.NEW_ROLE' | translate}}</div>
+              <div *ngIf="isReadOnly">({{'ROLE.READ_ONLY' | translate}})</div>
+            </div>
+            <button mat-icon-button *ngIf="!isNewRole" (click)="openRoleUsersDialog()">
+              <mat-icon class="material-icons-outlined" matBadge="{{role.userCount}}" matBadgeColor="warn" matBadgePosition="below" matTooltip="{{userCountTooltip}}" matTooltipHideDelay="100000">person</mat-icon>
+            </button>
+          </div>
+          <form id="my_form" [formGroup]="form" (ngSubmit)="submitForm(form.value)" class="d-flex flex-column">
+            <div *ngIf="isNewRole">
+              <mat-label class="font-weight-bold">{{'ROLE.ROLE_NAME' | translate}}</mat-label>
+              <mat-form-field class="w-100" [hideRequiredMarker]="true" [floatLabel]="'never'" appearance="outline">
+                <input type="text" matInput formControlName="roleName" data-role-name="form.controls['roleName'].value" [readonly]="isReadOnly" />
+                <button tabindex="-1" type="button" *ngIf="form.controls['roleName'].value" matSuffix mat-icon-button
+                        aria-label="Clear" (click)="form.controls['roleName'].setValue('')">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="form.controls['roleName'].errors?.['required']">
+                  {{'ROLE.REQUIRED_FIELD' | translate}}
+                </mat-error>
+                <mat-error *ngIf="form.controls['roleName'].errors?.['roleTaken']">
+                  {{'ROLE.ROLE_EXIST' | translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <table class="permission-table">
+              <thead>
+                <tr>
+                  <th>{{'ROLE.MODULE' | translate}}</th>
+                  <th>{{'ROLE.PERMISSIONS' | translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="3"><div><mat-icon class="material-icons-outlined mr-1">dashboard</mat-icon>{{'ROLE.DASHBOARD' | translate}}</div></td>
+                </tr>
+                <tr>
+                  <td><div><mat-icon>arrow_right</mat-icon>{{'ROLE.OPERATION_DASHBOARD' | translate}}</div></td>
+                  <td><mat-slide-toggle formControlName="viewDashboardOperation">{{'ROLE.VIEW' | translate}}</mat-slide-toggle></td>
+                </tr>
+                <tr>
+                  <td><div><mat-icon>arrow_right</mat-icon>{{'ROLE.OVERALL_DASHBOARD' | translate}}</div></td>
+                  <td><mat-slide-toggle formControlName="viewDashboardOverall">{{'ROLE.VIEW' | translate}}</mat-slide-toggle></td>
+                </tr>
+                <tr class="space">
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td><div><mat-icon class="material-icons-outlined mr-1">report_problem</mat-icon>{{'ROLE.HIGHWAY_INFO' | translate}}</div></td>
+                  <td>
+                    <mat-slide-toggle formControlName="viewHighwayInfo" class="mr-2">{{'ROLE.VIEW' | translate}}</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="editHighwayInfo">{{'ROLE.EDIT' | translate}}</mat-slide-toggle>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div><mat-icon class="material-icons-outlined mr-1">textsms</mat-icon>{{'ROLE.PUBLIC_INFO' | translate}}</div></td>
+                  <td>
+                    <mat-slide-toggle formControlName="viewPublicInfo" class="mr-2">{{'ROLE.VIEW' | translate}}</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="editPublicInfo">{{'ROLE.EDIT' | translate}}</mat-slide-toggle>
+                  </td>
+
+                </tr>
+                <tr>
+                  <td><div><mat-icon class="material-icons-outlined mr-1">feedback</mat-icon>{{'ROLE.USER_FEEDBACK' | translate}}</div></td>
+                  <td>
+                    <mat-slide-toggle formControlName="viewUserFeedback" class="mr-2">{{'ROLE.VIEW' | translate}}</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="editUserFeedback">{{'ROLE.EDIT' | translate}}</mat-slide-toggle>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div><mat-icon class="material-icons-outlined mr-1">star_border</mat-icon>{{'ROLE.HIGHWAY_RATING' | translate}}</div></td>
+                  <td>
+                    <mat-slide-toggle formControlName="viewHighwayRating" class="mr-2">{{'ROLE.VIEW' | translate}}</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="editHighwayRating">{{'ROLE.EDIT' | translate}}</mat-slide-toggle>
+                  </td>
+                </tr>
+                <tr class="space">
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><div><mat-icon class="material-icons-outlined mr-1">analytics</mat-icon>{{'ROLE.REPORT' | translate}}</div></td>
+                </tr>
+                <tr>
+                  <td><div><mat-icon>arrow_right</mat-icon>{{'ROLE.REPORT_AUDIT_LOG' | translate}}</div></td>
+                  <td>
+                    <mat-slide-toggle formControlName="viewReportAuditLog" class="mr-2">{{'ROLE.VIEW' | translate}}</mat-slide-toggle>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div><mat-icon>arrow_right</mat-icon>{{'ROLE.REPORT_HIGHWAY_INFO_SUMMARY' | translate}}</div></td>
+                  <td>
+                    <mat-slide-toggle formControlName="viewReportHighwayInfoSummary" class="mr-2">{{'ROLE.VIEW' | translate}}</mat-slide-toggle>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div><mat-icon>arrow_right</mat-icon>{{'ROLE.REPORT_HIGHWAY_INFO_COMPARISON' | translate}}</div></td>
+                  <td>
+                    <mat-slide-toggle formControlName="viewReportHighwayInfoComparison" class="mr-2">{{'ROLE.VIEW' | translate}}</mat-slide-toggle>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div><mat-icon>arrow_right</mat-icon>{{'ROLE.REPORT_PUBLIC_INFO' | translate}}</div></td>
+                  <td>
+                    <mat-slide-toggle formControlName="viewReportPublicInfo" class="mr-2">{{'ROLE.VIEW' | translate}}</mat-slide-toggle>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div><mat-icon>arrow_right</mat-icon>{{'ROLE.REPORT_USER_FEEDBACK' | translate}}</div></td>
+                  <td>
+                    <mat-slide-toggle formControlName="viewReportUserFeedback" class="mr-2">{{'ROLE.VIEW' | translate}}</mat-slide-toggle>
+                  </td>
+                </tr>
+                <tr class="space">
+                  <td colspan="2"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><div><mat-icon class="material-icons-outlined mr-1">settings</mat-icon>{{'ROLE.ADMIN_AREA' | translate}}</div></td>
+                </tr>
+                <tr>
+                  <td><div><mat-icon>arrow_right</mat-icon>{{'ROLE.USER' | translate}}</div></td>
+                  <td>
+                    <mat-slide-toggle formControlName="viewAdminAreaUser" class="mr-2">{{'ROLE.VIEW' | translate}}</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="editAdminAreaUser">{{'ROLE.EDIT' | translate}}</mat-slide-toggle>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div><mat-icon>arrow_right</mat-icon>{{'ROLE.ROLE' | translate}}</div></td>
+                  <td>
+                    <mat-slide-toggle formControlName="viewAdminAreaRole" class="mr-2">{{'ROLE.VIEW' | translate}}</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="editAdminAreaRole">{{'ROLE.EDIT' | translate}}</mat-slide-toggle>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div><mat-icon>arrow_right</mat-icon>{{'ROLE.AGENCY' | translate}}</div></td>
+                  <td>
+                    <mat-slide-toggle formControlName="viewAdminAreaAgency" class="mr-2">{{'ROLE.VIEW' | translate}}</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="editAdminAreaAgency">{{'ROLE.EDIT' | translate}}</mat-slide-toggle>
+                  </td>
+                </tr>
+                <tr>
+                  <td><div><mat-icon>arrow_right</mat-icon>{{'ROLE.HIGHWAY' | translate}}</div></td>
+                  <td>
+                    <mat-slide-toggle formControlName="viewAdminAreaHighway" class="mr-2">{{'ROLE.VIEW' | translate}}</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="editAdminAreaHighway">{{'ROLE.EDIT' | translate}}</mat-slide-toggle>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end" *ngIf="!isReadOnly">
+        <button mat-flat-button class="mr-1" color="primary" type="submit" form="my_form" [disabled]="(!form.valid || isSaving)">
+          <div class="d-flex align-items-center">
+            <div [class.d-none]="isSaving">{{'ROLE.SAVE' | translate}}</div>
+            <mat-progress-spinner mode="indeterminate" diameter="24" [class.d-none]="!isSaving">
+            </mat-progress-spinner>
+          </div>
+        </button>
+        <button mat-flat-button class="mr-1" color="warn" [disabled]="(isDeleting)" *ngIf="!isNewRole" (click)="openDeleteRoleDialog()">
+          <div class="d-flex align-items-center">
+            <div [class.d-none]="isDeleting">{{'ROLE.DELETE' | translate}}</div>
+            <mat-progress-spinner mode="indeterminate" diameter="24" [class.d-none]="!isDeleting">
+            </mat-progress-spinner>
+          </div>
+        </button>
+        <button mat-button (click)="printRole(form.value)" class="d-none">Print</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+

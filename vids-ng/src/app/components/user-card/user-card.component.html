@@ -1,0 +1,32 @@
+<div class="app-user-card mat-card d-flex" [class.selected]="user.selected" (click)="onClicked()">
+    <div class="d-flex w-100 p-2">
+        <div class="d-flex flex-column align-items-center justify-content-center pr-2">
+          <div class="avatar-symbol" *ngIf="user.avatar=='';else showAvatar">{{user.name[0].toUpperCase()}}</div>
+            <ng-template #showAvatar>
+                <div class="avatar">
+                    <img src="{{user.avatar}}">
+                </div>
+            </ng-template>
+            <div class="user-status px-1 mt-1 active mat-caption" *ngIf="!user.isBlocked; else blockUser">Active</div>
+            <ng-template #blockUser><div class="user-status px-1 mt-1 blocked mat-caption">Blocked</div></ng-template>
+        </div>
+        <div class="w-100">
+            <div class="font-weight-bold mb-1">{{user.name}}</div>
+            <div class="d-flex align-items-center"><mat-icon class="material-icons-outlined pr-1">email</mat-icon>{{user.email}}</div>          
+            <div class="d-flex align-items-center"><mat-icon class="material-icons-outlined pr-1">group</mat-icon>{{user.role}}</div>
+        </div>
+        <div>
+            <button mat-icon-button><mat-icon class="material-icons-outlined" [matMenuTriggerFor]="menuUser">more_vert</mat-icon></button>
+        </div>
+    </div> 
+</div>
+
+<mat-menu #menuUser="matMenu">
+  <button mat-menu-item (click)="openUserInfoDialog()"><mat-icon class="material-icons-outlined">info</mat-icon>{{'USER_CARD.VIEW_INFO' | translate}}</button>
+  <button mat-menu-item (click)="openUpdateUserInfoDialog()"><mat-icon class="material-icons-outlined">edit</mat-icon>{{'USER_CARD.UPDATE_INFO' | translate}}</button>
+  <button mat-menu-item (click)="openUpdateUserAvatarDialog()"><mat-icon class="material-icons-outlined">account_circle</mat-icon>{{'USER_CARD.UPDATE_AVATAR' | translate}}</button>
+  <button mat-menu-item (click)="openUpdateUserPasswordDialog()"><mat-icon class="material-icons-outlined">password</mat-icon>{{'USER_CARD.UPDATE_PASSWORD' | translate}}</button>
+  <button mat-menu-item (click)="activateUser()"><mat-icon class="material-icons-outlined">check_circle</mat-icon>{{'USER_CARD.ACTIVATE_USER' | translate}}</button>
+  <button mat-menu-item (click)="lockUser()"><mat-icon class="material-icons-outlined">lock</mat-icon>{{'USER_CARD.BLOCK_USER' | translate}}</button>
+  <button mat-menu-item (click)="openDeleteUserDialog()"><mat-icon class="material-icons-outlined">delete</mat-icon>{{'USER_CARD.DELETE_USER' | translate}}</button>
+</mat-menu>

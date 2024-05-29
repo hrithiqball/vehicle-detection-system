@@ -1,0 +1,45 @@
+.app-role-cc {
+    height: 100%;
+
+  .role-list-container {
+    width: 200px;
+    overflow:auto;
+    height:100%;
+  }
+
+  .role-container {
+    width: 100%;
+    height: 100%;
+    overflow:auto;
+  }
+
+  .permission-table {
+    thead {
+      tr {
+        th {
+          text-align: left;
+        }
+
+        th:first-child {
+          width: 200px;
+        }
+      }
+    }
+
+    tbody {
+      tr.space {
+        height: 24px;
+      }
+
+      tr {
+        td {
+          div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+          }
+        }
+      }
+    }
+  }
+}

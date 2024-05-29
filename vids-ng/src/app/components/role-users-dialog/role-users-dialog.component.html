@@ -1,0 +1,40 @@
+<div class="app-role-users-dialog">
+  <div mat-dialog-title>
+    <div class="d-flex align-items-center">
+      <mat-icon class="material-icons-outlined pr-1">person</mat-icon>
+      <span>{{role.roleName}}</span>
+      <span class="ml-1">{{'ROLE_USERS_DIALOG.TITLE' | translate}}</span>
+    </div>
+  </div>
+  <div mat-dialog-content>
+    <div>
+      <div class="d-flex align-items-center justify-content-between user mb-1" *ngFor="let user of users">
+        <div class="d-flex align-items-center">
+          <div>
+            <div class="avatar m-1" *ngIf="user.avatar!='';else showAvatarSymbol">
+              <img src="{{user.avatar}}">
+            </div>
+            <ng-template #showAvatarSymbol>
+              <div class="avatar-symbol m-1">
+                {{user.name.charAt(0).toUpperCase()}}
+              </div>
+            </ng-template>
+          </div>
+          <div>{{user.name}}</div>
+        </div>
+        <div class="mr-1">
+          <button mat-icon-button color="warn" (click)="openDeleteUserDialog(user)"><mat-icon class="material-icons-outlined">delete</mat-icon></button>
+        </div>
+      </div>
+    </div>
+    <app-shimmer-list [itemCount]="1" *ngIf="isLoading"></app-shimmer-list>
+    <div class="d-flex justify-content-center w-100" *ngIf="!isEndOfData"><button class="w-100" mat-flat-button (click)="loadMore()">{{'ROLE_USERS_DIALOG.VIEW_MORE' | translate}}</button></div>
+    <div class="d-flex justify-content-center flex-column align-items-center" *ngIf="isEmpty">
+      <img src="../../../assets/img/box.png" width="120" class="mb-1" />
+      <div>{{'ROLE_USERS_DIALOG.NO_USER' | translate}}</div>
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-button mat-dialog-close>{{'ROLE_USERS_DIALOG.CLOSE' | translate}}</button>
+  </div>
+</div>
